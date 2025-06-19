@@ -25,13 +25,19 @@ class PosTextSize {
 }
 
 class PaperSize {
-  const PaperSize._internal(this.value);
+  const PaperSize._internal(this.value, [this.customWidth]);
   final int value;
+  final int? customWidth;
+
   static const mm58 = PaperSize._internal(1);
   static const mm72 = PaperSize._internal(2);
   static const mm80 = PaperSize._internal(3);
 
+  // Custom size
+  factory PaperSize.custom(int widthPx) => PaperSize._internal(99, widthPx);
+
   int get width {
+    if (customWidth != null) return customWidth!;
     if (value == PaperSize.mm58.value) {
       return 384;
     } else if (value == PaperSize.mm72.value) {
@@ -39,7 +45,6 @@ class PaperSize {
     } else {
       return 576;
     }
-    // value == PaperSize.mm58.value ? 384 : 558;
   }
 }
 
